@@ -34,19 +34,56 @@ class Products extends Component {
       )
     });
 
+    const Select = e => {
+      const number = Number(e.target.id)
+      this.setState({
+        page: number,
+        start: 5 * (number - 1),
+        end: 5 * number
+      })
+    }
+
     const NumberList = pages.map(number => {
       return (
-        <Button light flat>{number}</Button>
+        <Button flat
+          id={number}
+          light={this.state.page === number ? false : true}
+          onClick={Select}
+        >
+          {number}
+        </Button>
       )
-    });
+    })
+
+    const Prev = () => {
+      const { page, start, end } = this.state
+      if (page > 1) {
+        this.setState({
+          page: page - 1,
+          start: start - 5,
+          end: end - 5
+        })
+      }
+    }
+
+    const Next = () => {
+      const { page, start, end } = this.state
+      if (page < pages.length) {
+        this.setState({
+          page: page + 1,
+          start: start + 5,
+          end: end + 5
+        })
+      }
+    }
 
     return (
       <Fragment>
         {CardList}
         <Nav>
-          <Button>이전</Button>
+          <Button hide={this.state.page === 1 ? true : false} onClick={Prev}>이전</Button>
           {NumberList}
-          <Button>다음</Button>
+          <Button hide={this.state.page === pages.length ? true : false} onClick={Next}>다음</Button>
         </Nav>
       </Fragment>
     );

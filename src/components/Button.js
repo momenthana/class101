@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Button = styled(Link)`
   display: inline-block;
+  opacity: ${props => props.hide ? '0' : '1'}
   ${props => props.center ? 'margin: 0px auto' : ''};
   padding: 0px ${props => props.flat ? '0px' : '20px'};
   ${props => props.flat ? 'width: 35px' : ''};
