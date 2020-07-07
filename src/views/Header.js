@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
+import { Button } from '../components'
 
 const Nav = styled.header`
   height: 50px;
@@ -13,18 +14,10 @@ const Logo = styled.h1`
   line-height: 50px;
 `;
 
-const Button = styled.div`
+const Right = styled.div`
   float: right;
   margin-top: 7.5px;
   margin-right: 25px;
-  width: 100px;
-  height: 35px;
-  background: #9146ff;
-  color: white;
-  font-size: 17.5px;
-  border-radius: 17.5px;
-  text-align: center;
-  line-height: 35px;
 `;
 
 class Header extends Component {
@@ -32,7 +25,9 @@ class Header extends Component {
     return (
       <Nav>
         <Logo>CLASS101</Logo>
-        <Button>장바구니</Button>
+        <Right>
+          <Button>장바구니</Button>
+        </Right>
       </Nav>
     );
   }

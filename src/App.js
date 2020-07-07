@@ -11,8 +11,8 @@ class App extends React.Component {
   render() {
     return (
       <Fragment>
-        <Header />
         <Router>
+          <Header />
           <Switch>
             <Route exact path="/"><Home /></Route>
             <Route path="/products"><Products /></Route>
