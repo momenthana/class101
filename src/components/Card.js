@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
-import { Button, Right } from './'
+import { Button } from './'
 
 const Box = styled.div`
   margin: 30px auto;
@@ -14,18 +14,28 @@ const Image = styled.img`
 `;
 
 const Content = styled.div`
-  height: 52.5px;
+  height: 70px;
 `;
 
 const Title = styled.h4`
-  display: inline-block;
-  margin: 3px;
+  margin: 10px;
   margin-left: 15px;
+  width: 95%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const Price = styled.p`
-  margin: 0px;
+  display: inline-block;
+  margin: 5px;
   margin-left: 15px;
+`;
+
+const Right = styled.div`
+  float: right;
+  margin-top: -7.5px;
+  margin-right: 25px;
 `;
 
 class Card extends Component {
@@ -35,10 +45,10 @@ class Card extends Component {
         <Image src={this.props.img} />
         <Content>
           <Title>{this.props.title}</Title>
+          <Price>{this.props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
           <Right>
             <Button>담기</Button>
           </Right>
-          <Price>{this.props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
         </Content>
       </Box>
     );
