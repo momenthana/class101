@@ -4,6 +4,11 @@ import { Button, Right } from '../components'
 
 const Nav = styled.header`
   height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
 `;
 
 const Logo = styled.h1`

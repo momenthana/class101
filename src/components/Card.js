@@ -6,7 +6,7 @@ const Box = styled.div`
   margin: 30px auto;
   width: 70vw;
   max-width: 600px;
-  box-shadow: 0 0 10px 0 gray
+  box-shadow: 0 0 10px 0 gray;
 `;
 
 const Image = styled.img`
