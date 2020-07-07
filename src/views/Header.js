@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components'
 
 const Nav = styled.header`
@@ -27,7 +27,7 @@ const Button = styled.div`
   line-height: 35px;
 `;
 
-class Header extends React.Component {
+class Header extends Component {
   render() {
     return (
       <Nav>
