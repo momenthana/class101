@@ -2,9 +2,9 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
 const Button = styled(Link)`
-  display: block;
+  display: inline-block;
   ${props => props.center ? 'margin: 0px auto' : ''};
-  width: 100px;
+  padding: 0px 20px;
   height: 35px;
   background: #9146ff;
   color: white;
