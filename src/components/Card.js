@@ -38,7 +38,7 @@ class Card extends Component {
           <Right>
             <Button>담기</Button>
           </Right>
-          <Price>{this.props.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
+          <Price>{this.props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
         </Content>
       </Box>
     );
