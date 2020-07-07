@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import { Button } from '../components'
+import { Link } from 'react-router-dom';
 
 const Nav = styled.header`
   height: 50px;
@@ -11,12 +12,15 @@ const Nav = styled.header`
   background: white;
 `;
 
-const Logo = styled.h1`
+const Logo = styled(Link)`
   display: inline;
   margin: 0px;
   margin-left: 25px;
   font-size: 30px;
   line-height: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  color: inherit;
 `;
 
 const Right = styled.div`
@@ -29,7 +33,7 @@ class Header extends Component {
   render() {
     return (
       <Nav>
-        <Logo>CLASS101</Logo>
+        <Logo to='/'>CLASS101</Logo>
         <Right>
           <Button>장바구니</Button>
         </Right>
