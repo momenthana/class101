@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
-import { Button } from '../components'
+import { Button, Right } from '../components'
 
 const Nav = styled.header`
   height: 50px;
@@ -12,12 +12,6 @@ const Logo = styled.h1`
   margin-left: 25px;
   font-size: 30px;
   line-height: 50px;
-`;
-
-const Right = styled.div`
-  float: right;
-  margin-top: 7.5px;
-  margin-right: 25px;
 `;
 
 class Header extends Component {
