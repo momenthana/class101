@@ -15,6 +15,7 @@ const Image = styled.div`
   height: 130px;
   width: 200px;
   margin: 10px;
+  cursor: pointer;
   ${props => (`
     background-image: url(${props.src});
     background-size: cover;
@@ -24,6 +25,7 @@ const Image = styled.div`
 
 const Text = styled.h2`
   width: 100%;
+  height: 100%;
   display: inline-block;
   background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.3);
   color: white;
@@ -57,31 +59,42 @@ const Right = styled.div`
 
 class Cart extends Component {
   constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {select: ''};
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+    this.state = {
+      select: this.props.state.select
+    };
   }
 
   handleChange() {
-    if (this.props.state.select.indexOf(this.props.element) === -1) {
-      this.props.SelectChange(this.props.element);
-    } else {
-      this.props.SelectDelete(this.props.element);
-    }
+    this.props.SelectDelete(this.props.element)
   }
 
   render() {
-    const selected = this.props.state.select.indexOf(this.props.element.id)
-    
+    const SelectChange = () => {
+      if (this.state.select.indexOf(this.props.element) === -1) {
+        let selected = this.state.select
+        selected.push(this.props.element)
+        this.setState({ select: selected })
+      } else {
+        let selected = this.state.select
+        let search = selected.indexOf(this.props.element)
+        selected.splice(search, 1)
+        this.setState({ select: selected })
+      }
+    }
+
+    const selected = this.state.select.indexOf(this.props.element) !== -1
+
     return (
       <Box>
-        <Image src={this.props.element.coverImage}>
-          <Text check={this.props.check}><Transform>{this.props.check ? 'ㅅ' : ''}</Transform>{this.props.check ? '선택됨' : '해제됨'}</Text>
+        <Image src={this.props.element.coverImage} onClick={SelectChange}>
+          <Text check={selected}><Transform>{selected ? 'ㅅ' : ''}</Transform>{selected ? '선택됨' : '해제됨'}</Text>
         </Image>
         <Title>{this.props.element.title}</Title>
         <Right>
           <Price>{this.props.element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
-          <Button onClick={this.handleChange} light={selected}>{selected ? '빼기' : '담기'}</Button>
+          <Button onClick={this.handleChange} light>빼기</Button>
         </Right>
       </Box>
     );

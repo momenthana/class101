@@ -8,10 +8,13 @@ const Nav = styled.div`
 `;
 
 class Products extends Component {
-  state = {
-    page: 1,
-    start: 0,
-    end: 5
+  constructor(props) {
+    super(props)
+    this.state = {
+      page: 1,
+      start: 0,
+      end: 5
+    }
   }
 
   render() {

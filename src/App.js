@@ -31,7 +31,7 @@ class App extends React.Component {
   }
 
   SelectDelete(select) {
-    let selected = this.state.select 
+    let selected = this.state.select
     let search = selected.indexOf(select);
     selected.splice(search, 1);
     this.setState({ select: selected });

@@ -11,7 +11,6 @@ class Cart extends Component {
           SelectChange={this.props.SelectChange}
           SelectDelete={this.props.SelectDelete}
           cart
-          check
         />
       )
     });
