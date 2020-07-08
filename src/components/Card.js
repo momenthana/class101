@@ -39,15 +39,31 @@ const Right = styled.div`
 `;
 
 class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {select: ''};
+  }
+
+  handleChange() {
+    if (this.props.state.select.indexOf(this.props.element) === -1) {
+      this.props.SelectChange(this.props.element);
+    } else {
+      this.props.SelectDelete(this.props.element);
+    }
+  }
+
   render() {
+    const selected = this.props.state.select.indexOf(this.props.element) !== -1
+
     return (
       <Box>
-        <Image src={this.props.img} />
+        <Image src={this.props.element.coverImage} />
         <Content>
-          <Title>{this.props.title}</Title>
-          <Price>{this.props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
+          <Title>{this.props.element.title}</Title>
+          <Price>{this.props.element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
           <Right>
-            <Button>담기</Button>
+            <Button onClick={this.handleChange} light={selected}>{selected? '빼기' : '담기'}</Button>
           </Right>
         </Content>
       </Box>

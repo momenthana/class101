@@ -10,8 +10,31 @@ import NotFound from './views/NotFound';
 import items from './data/productItems'
 
 class App extends React.Component {
-  state = {
-    items: items
+  constructor(props) {
+    super(props);
+    this.SelectChange = this.SelectChange.bind(this);
+    this.SelectDelete = this.SelectDelete.bind(this);
+    this.state = {
+      items: items,
+      select: []
+    }
+  }
+
+  SelectChange(select) {
+    let selected = this.state.select
+    if(selected.length === 3) {
+      alert('장바구니에는 최대 3개의 상품을 담을 수 있습니다!')
+    } else {
+      selected.push(select)
+      this.setState({ select: selected });
+    }
+  }
+
+  SelectDelete(select) {
+    let selected = this.state.select 
+    let search = selected.indexOf(select);
+    selected.splice(search, 1);
+    this.setState({ select: selected });
   }
 
   render() {
@@ -21,8 +44,8 @@ class App extends React.Component {
           <Header />
           <Switch>
             <Route exact path="/"><Home /></Route>
-            <Route path="/products"><Products state={this.state}/></Route>
-            <Route path="/cart"><Cart /></Route>
+            <Route path="/products"><Products state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} /></Route>
+            <Route path="/cart"><Cart state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} /></Route>
             <NotFound />
           </Switch>
         </Router>

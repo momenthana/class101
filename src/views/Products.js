@@ -27,9 +27,11 @@ class Products extends Component {
     const Page = items.slice(this.state.start, this.state.end);
     const CardList = Page.map(element => {
       return (
-        <Card img={element.coverImage}
-          title={element.title}
-          price={element.price}
+        <Card
+          element={element}
+          state={this.props.state}
+          SelectChange={this.props.SelectChange}
+          SelectDelete={this.props.SelectDelete}
         />
       )
     });

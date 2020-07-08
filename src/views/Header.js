@@ -35,7 +35,7 @@ class Header extends Component {
       <Nav>
         <Logo to='/'>CLASS101</Logo>
         <Right>
-          <Button>장바구니</Button>
+          <Button to='/cart'>장바구니</Button>
         </Right>
       </Nav>
     );
