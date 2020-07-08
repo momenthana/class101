@@ -27,6 +27,7 @@ const Text = styled.h2`
   width: 100%;
   height: 100%;
   display: inline-block;
+  user-select: none;
   background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.3);
   color: white;
   margin: 0px;
