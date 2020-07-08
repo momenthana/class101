@@ -4,8 +4,8 @@ import { Button } from './'
 
 const Box = styled.div`
   margin: 30px auto;
-  width: 70vw;
-  max-width: 600px;
+  width: 80vw;
+  max-width: 700px;
   box-shadow: 0 0 10px 0 gray;
 `;
 

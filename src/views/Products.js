@@ -46,6 +46,7 @@ class Products extends Component {
         start: 5 * (number - 1),
         end: 5 * number
       })
+      window.scrollTo(0,0)
     }
 
     const NumberList = pages.map(number => {
@@ -68,6 +69,7 @@ class Products extends Component {
           start: start - 5,
           end: end - 5
         })
+        window.scrollTo(0,0)
       }
     }
 
@@ -79,6 +81,7 @@ class Products extends Component {
           start: start + 5,
           end: end + 5
         })
+        window.scrollTo(0,0)
       }
     }
 

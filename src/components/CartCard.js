@@ -23,21 +23,17 @@ const Image = styled.div`
   )}
 `;
 
-const Text = styled.h2`
+const Text = styled.h1`
   width: 100%;
   height: 100%;
   display: inline-block;
   user-select: none;
-  background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.3);
+  background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.5);
   color: white;
   margin: 0px;
+  font-size: 50px;
   line-height: 130px;
   text-align: center;
-`;
-
-const Transform = styled.span`
-  display: inline-block;
-  transform: scale(1, -1);
 `;
 
 const Title = styled.h4`
@@ -52,9 +48,10 @@ const Delete = styled.div`
   margin-bottom: 40px;
 `;
 
-const Price = styled.h4`
+const Desc = styled.h4`
   display: inline;
   margin: 10px;
+  color: ${props => props.color ? props.color : ''};
 `;
 
 const Right = styled.div`
@@ -66,6 +63,9 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
+    this.CheckChange = this.CheckChange.bind(this)
+    this.handleCountUp = this.handleCountUp.bind(this)
+    this.handleCountDown = this.handleCountDown.bind(this)
     this.state = {
       select: this.props.state.select
     };
@@ -75,57 +75,47 @@ class Cart extends Component {
     this.props.SelectDelete(this.props.element)
   }
 
+  CheckChange () {
+    this.props.CheckChange(this.props.element)
+  }
+
+  handleCountUp() {
+    this.props.CountUp(this.props.element)
+  }
+
+  handleCountDown() {
+    this.props.CountDown(this.props.element)
+  }
+
   render() {
-    const SelectChange = () => {
-      const element = this.props.element
-      if (this.state.select.indexOf(element) === -1) {
-        let selected = this.state.select
-        selected.push(element)
-        this.setState({ select: selected })
-      } else {
-        let selected = this.state.select
-        let search = selected.indexOf(element)
-        selected.splice(search, 1)
-        this.setState({ select: selected })
-      }
-    }
+    const element = this.props.element
+    const checked = this.state.select[this.state.select.indexOf(element)].check
 
-    const CountDown = () => {
-      const element = this.props.element
-      let selected = this.state.select
-      let search = selected.indexOf(element)
-      if (selected[search].count > 1) {
-        selected[search].count -= 1
-        this.setState({ select: selected })
-      } else {
-        alert('최소 1개 이상이어야 합니다.');
-      }
+    let Price = 0
+    let Dis = ''
+    if (element.availableCoupon !== false && this.props.state.value && this.props.state.value.type === 'rate') {
+      Price += element.price * element.count * ((100 - this.props.state.value.discountRate) * 0.01)
+      Dis = this.props.state.value.discountRate + '% 할인'
+    } else {
+      Price += element.price * element.count
     }
-
-    const CountUp = () => {
-      const element = this.props.element
-      let selected = this.state.select
-      let search = selected.indexOf(element)
-      selected[search].count += 1
-      this.setState({ select: selected })
-    }
-
-    const selected = this.state.select.indexOf(this.props.element) !== -1
 
     return (
       <Box>
-        <Image src={this.props.element.coverImage} onClick={SelectChange}>
-          <Text check={selected}><Transform>{selected ? 'ㅅ' : ''}</Transform>{selected ? '선택됨' : '해제됨'}</Text>
+        <Image src={element.coverImage} onClick={this.CheckChange}>
+          <Text check={checked}>{checked ? '-' : '+'}</Text>
         </Image>
-        <Title>{this.props.element.title}</Title>
+        <Title>{element.title}</Title>
         <Right>
           <Delete>
             <Button onClick={this.handleChange} light>빼기</Button>
           </Delete>
-          <Price>{this.props.element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
-          <Button onClick={CountDown} flat>-</Button>
-          <Button light>{this.props.element.count}개</Button>
-          <Button onClick={CountUp} flat>+</Button>
+          <Desc color='red'>{Dis}</Desc>
+          <Desc color='orange'>{element.availableCoupon === false ? '쿠폰 적용 불가 ' : ''}</Desc>
+          <Desc>{Price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Desc>
+          <Button onClick={this.handleCountDown} flat>-</Button>
+          <Button light>{element.count}개</Button>
+          <Button onClick={this.handleCountUp} flat>+</Button>
         </Right>
       </Box>
     );
