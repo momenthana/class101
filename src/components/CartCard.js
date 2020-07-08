@@ -10,10 +10,31 @@ const Box = styled.div`
   box-shadow: 0 0 10px 0 gray;
 `;
 
-const Image = styled.img`
-  display: inline;
+const Image = styled.div`
+  display: inline-block;
   height: 130px;
+  width: 200px;
   margin: 10px;
+  ${props => (`
+    background-image: url(${props.src});
+    background-size: cover;
+    `
+  )}
+`;
+
+const Text = styled.h2`
+  width: 100%;
+  display: inline-block;
+  background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.3);
+  color: white;
+  margin: 0px;
+  line-height: 130px;
+  text-align: center;
+`;
+
+const Transform = styled.span`
+  display: inline-block;
+  transform: scale(1, -1);
 `;
 
 const Title = styled.h4`
@@ -38,7 +59,9 @@ class Cart extends Component {
   render() {
     return (
       <Box>
-        <Image src={this.props.img} />
+        <Image src={this.props.img}>
+          <Text check={this.props.check}><Transform>{this.props.check ? 'ㅅ' : ''}</Transform>{this.props.check ? '선택됨' : '해제됨'}</Text>
+        </Image>
         <Title>{this.props.title}</Title>
         <Right>
           <Price>{this.props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
