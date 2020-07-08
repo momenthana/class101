@@ -44,18 +44,22 @@ const Title = styled.h4`
   display: inline-block;
   position: absolute;
   margin-left: 10px;
-  width: 40%;
-  overflow: hidden;
+  width: 35%;
 `;
 
-const Price = styled.p`
-  display: block;
+const Delete = styled.div`
+  text-align: right;
+  margin-bottom: 40px;
+`;
+
+const Price = styled.h4`
+  display: inline;
+  margin: 10px;
 `;
 
 const Right = styled.div`
   float: right;
-  margin-top: 45px;
-  margin-right: 25px;
+  margin: 15px;
 `;
 
 class Cart extends Component {
@@ -73,16 +77,37 @@ class Cart extends Component {
 
   render() {
     const SelectChange = () => {
-      if (this.state.select.indexOf(this.props.element) === -1) {
+      const element = this.props.element
+      if (this.state.select.indexOf(element) === -1) {
         let selected = this.state.select
-        selected.push(this.props.element)
+        selected.push(element)
         this.setState({ select: selected })
       } else {
         let selected = this.state.select
-        let search = selected.indexOf(this.props.element)
+        let search = selected.indexOf(element)
         selected.splice(search, 1)
         this.setState({ select: selected })
       }
+    }
+
+    const CountDown = () => {
+      const element = this.props.element
+      let selected = this.state.select
+      let search = selected.indexOf(element)
+      if (selected[search].count > 1) {
+        selected[search].count -= 1
+        this.setState({ select: selected })
+      } else {
+        alert('최소 1개 이상이어야 합니다.');
+      }
+    }
+
+    const CountUp = () => {
+      const element = this.props.element
+      let selected = this.state.select
+      let search = selected.indexOf(element)
+      selected[search].count += 1
+      this.setState({ select: selected })
     }
 
     const selected = this.state.select.indexOf(this.props.element) !== -1
@@ -94,8 +119,13 @@ class Cart extends Component {
         </Image>
         <Title>{this.props.element.title}</Title>
         <Right>
+          <Delete>
+            <Button onClick={this.handleChange} light>빼기</Button>
+          </Delete>
           <Price>{this.props.element.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
-          <Button onClick={this.handleChange} light>빼기</Button>
+          <Button onClick={CountDown} flat>-</Button>
+          <Button light>{this.props.element.count}개</Button>
+          <Button onClick={CountUp} flat>+</Button>
         </Right>
       </Box>
     );

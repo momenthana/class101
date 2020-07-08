@@ -44,7 +44,6 @@ class Cart extends Component {
         <CartCard
           element={element}
           state={this.props.state}
-          SelectChange={this.props.SelectChange}
           SelectDelete={this.props.SelectDelete}
           cart
         />

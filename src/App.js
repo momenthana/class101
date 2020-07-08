@@ -25,6 +25,7 @@ class App extends React.Component {
     if(selected.length === 3) {
       alert('장바구니에는 최대 3개의 상품을 담을 수 있습니다!')
     } else {
+      select.count = 1
       selected.push(select)
       this.setState({ select: selected });
     }
