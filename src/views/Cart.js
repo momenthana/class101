@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { CartCard, Button } from '../components'
+import { CartCard, Button, MessageBox } from '../components'
 import styled from 'styled-components'
 
 const Box = styled.div`
@@ -48,10 +48,18 @@ class Cart extends Component {
           cart
         />
       )
-    });
+    })
 
     return (
       <Fragment>
+        {this.props.state.select.length ? '' :
+          <MessageBox
+            title='비어있어요!'
+            desc='장바구니에 상품이 담겨있지 않아요. 상품을 찾으러 가볼까요!'
+            button='상품 목록으로 가기'
+            to='/products'
+          />
+        }
         {CardList}
         <Box>
           <Title>쿠폰</Title>
