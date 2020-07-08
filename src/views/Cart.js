@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { CartCard } from '../components'
 
 class Cart extends Component {
@@ -17,9 +17,9 @@ class Cart extends Component {
     });
 
     return (
-      <div>
+      <Fragment>
         {CardList}
-      </div>
+      </Fragment>
     );
   }
 }

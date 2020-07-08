@@ -41,11 +41,16 @@ class App extends React.Component {
     return (
       <Fragment>
         <Router>
-          <Header />
           <Switch>
             <Route exact path="/"><Home /></Route>
-            <Route path="/products"><Products state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} /></Route>
-            <Route path="/cart"><Cart state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} /></Route>
+            <Route path="/products">
+              <Header />
+              <Products state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} />
+            </Route>
+            <Route path="/cart">
+              <Header cart />
+              <Cart state={this.state} SelectChange={this.SelectChange} SelectDelete={this.SelectDelete} />
+            </Route>
             <NotFound />
           </Switch>
         </Router>
