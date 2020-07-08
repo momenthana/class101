@@ -8,19 +8,25 @@ const Box = styled.div`
   max-width: 700px;
   height: 150px;
   box-shadow: 0 0 10px 0 gray;
+  overflow: hidden;
 `;
 
 const Image = styled.div`
+  float: left;
   display: inline-block;
   height: 130px;
   width: 200px;
   margin: 10px;
   cursor: pointer;
+  &:hover {
+    height: 150px;
+    width: 220px;
+    margin: 0px;
+  }
   ${props => (`
     background-image: url(${props.src});
     background-size: cover;
-    `
-  )}
+  `)}
 `;
 
 const Text = styled.h1`
@@ -28,35 +34,41 @@ const Text = styled.h1`
   height: 100%;
   display: inline-block;
   user-select: none;
-  background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.5);
+  background: rgba(${props => props.check ? '145, 70, 255' : '0, 0, 0'}, 0.3);
   color: white;
   margin: 0px;
-  font-size: 50px;
   line-height: 130px;
   text-align: center;
+  &:hover {
+    line-height: 150px;
+  }
 `;
 
 const Title = styled.h4`
-  display: inline-block;
-  position: absolute;
-  margin-left: 10px;
+  float: left;
   width: 35%;
+  margin: 0px;
+  margin-top: 20px;
+  margin-left: 10px;
 `;
 
-const Delete = styled.div`
-  text-align: right;
-  margin-bottom: 40px;
+const Inline = styled.div`
+  witdh: 50px;
+  float: left;
+  text-aline: right;
+  margin: 10px;
 `;
 
 const Desc = styled.h4`
   display: inline;
-  margin: 10px;
+  margin: 3px;
   color: ${props => props.color ? props.color : ''};
 `;
 
 const Right = styled.div`
   float: right;
-  margin: 15px;
+  margin-right: 10px;
+  margin-top: 40px;
 `;
 
 class Cart extends Component {
@@ -75,7 +87,7 @@ class Cart extends Component {
     this.props.SelectDelete(this.props.element)
   }
 
-  CheckChange () {
+  CheckChange() {
     this.props.CheckChange(this.props.element)
   }
 
@@ -92,10 +104,10 @@ class Cart extends Component {
     const checked = this.state.select[this.state.select.indexOf(element)].check
 
     let Price = 0
-    let Dis = ''
+    let Discount = ''
     if (element.availableCoupon !== false && this.props.state.value && this.props.state.value.type === 'rate') {
       Price += element.price * element.count * ((100 - this.props.state.value.discountRate) * 0.01)
-      Dis = this.props.state.value.discountRate + '% 할인'
+      Discount = this.props.state.value.discountRate + '% 할인'
     } else {
       Price += element.price * element.count
     }
@@ -103,14 +115,14 @@ class Cart extends Component {
     return (
       <Box>
         <Image src={element.coverImage} onClick={this.CheckChange}>
-          <Text check={checked}>{checked ? '-' : '+'}</Text>
+          <Text check={checked}>{checked ? '선택됨' : '제외됨'}</Text>
         </Image>
         <Title>{element.title}</Title>
+        <Inline>
+          <Button onClick={this.handleChange} light>빼기</Button>
+        </Inline>
         <Right>
-          <Delete>
-            <Button onClick={this.handleChange} light>빼기</Button>
-          </Delete>
-          <Desc color='red'>{Dis}</Desc>
+          <Desc color='red'>{Discount}</Desc>
           <Desc color='orange'>{element.availableCoupon === false ? '쿠폰 적용 불가 ' : ''}</Desc>
           <Desc>{Price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Desc>
           <Button onClick={this.handleCountDown} flat>-</Button>

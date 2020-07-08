@@ -6,7 +6,7 @@ import coupons from '../data/coupons'
 
 const Box = styled.div`
   margin: 30px auto;
-  width: 80vw;
+  width: 90vw;
   max-width: 700px;
   height: 100px;
   box-shadow: 0 0 10px 0 gray;
@@ -15,6 +15,7 @@ const Box = styled.div`
 const Title = styled.h4`
   display: inline-block;
   margin: 15px;
+  margin-left: 5px;
   color: ${props => props.color ? props.color : ''};
 `;
 
@@ -116,11 +117,16 @@ class Cart extends Component {
     })
 
     let PriceAll = 0
+    let CheckCount = 0
+    let AvailableFalseCount = 0
     let Dis = ''
+    let Alert = ''
     this.props.state.select.forEach(element => {
       if (element.check) {
+        CheckCount++
         if (element.availableCoupon === false) {
           PriceAll += element.price * element.count
+          AvailableFalseCount++
         } else {
           if (this.state.value && this.state.value.type === 'rate') {
             PriceAll += element.price * element.count * ((100 - this.state.value.discountRate) * 0.01)
@@ -130,10 +136,14 @@ class Cart extends Component {
         }
       }
     })
-    if (this.state.value && this.state.value.type === 'amount') {
-      if (PriceAll !== 0) {
-        PriceAll -= this.state.value.discountAmount
-        Dis = this.state.value.discountAmount + '원 할인'
+    if (CheckCount && this.state.value && (this.state.value.type === 'rate' || this.state.value.type === 'amount') && CheckCount === AvailableFalseCount) {
+      Alert = '모든 상품 쿠폰 적용 불가'
+    } else {
+      if (this.state.value && this.state.value.type === 'amount') {
+        if (PriceAll !== 0) {
+          PriceAll -= this.state.value.discountAmount
+          Dis = this.state.value.discountAmount + '원 할인'
+        }
       }
     }
 
@@ -160,8 +170,9 @@ class Cart extends Component {
             <Button light hide={ this.state.value.title === 'init' ? true : false } onClick={couponDelete}>취소</Button>
           </Left>
           <Right>
+            <Title color='orange'>{Alert}</Title>
             <Title color='red'>{Dis}</Title>
-            <Title>총 결제금액</Title>
+            <Title>총 결제 금액</Title>
             <Price>{PriceAll.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Price>
             <Button>결제하기</Button>
           </Right>

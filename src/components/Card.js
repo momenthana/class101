@@ -5,12 +5,13 @@ import { Button } from './'
 const Box = styled.div`
   margin: 30px auto;
   width: 80vw;
-  max-width: 700px;
+  max-width: 500px;
   box-shadow: 0 0 10px 0 gray;
 `;
 
 const Image = styled.img`
   width: 100%;
+  max-width: 100%;
 `;
 
 const Content = styled.div`
